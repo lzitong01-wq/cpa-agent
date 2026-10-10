@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block subtitle %}自动收集错题 · 按科目/知识点筛选 · 重做 · 移除{% endblock %}
+
+{% block content %}
+<div class="grid c4" style="margin-bottom:16px">
+  <div class="card stat bad"><span class="num" id="w-open">-</span><span class="label">待攻克错题</span></div>
+  <div class="card stat ok"><span class="num" id="w-resolved">-</span><span class="label">已攻克（连对2次自动脱离）</span></div>
+  <div class="card stat brand"><span class="num" id="w-subject">-</span><span class="label">涉及科目数</span></div>
+  <div class="card">
+    <div class="row" style="height:100%;align-items:center">
+      <button class="primary" id="btn-redo">❌ 开始错题重做</button>
+    </div>
+  </div>
+</div>
+
+<div class="card" style="margin-bottom:16px">
+  <div class="row">
+    <label class="field" style="flex:1;min-width:160px;margin:0"><span>科目</span>
+      <select id="f-subject"><option value="">全部科目</option></select>
+    </label>
+    <label class="field" style="flex:1;min-width:160px;margin:0"><span>知识点</span>
+      <select id="f-kp"><option value="">全部知识点</option></select>
+    </label>
+    <label class="field" style="flex:1;min-width:150px;margin:0"><span>状态</span>
+      <select id="f-status">
+        <option value="open">待攻克</option>
+        <option value="resolved">已攻克</option>
+        <option value="all">全部（含已移除）</option>
+      </select>
+    </label>
+    <label class="field" style="flex:1;min-width:110px;margin:0"><span>每页</span>
+      <select id="f-limit"><option value="10">10</option><option value="20" selected>20</option><option value="50">50</option></select>
+    </label>
+  </div>
+  <div class="row" style="margin-top:10px">
+    <span class="small muted" id="count-label"></span>
+    <span style="flex:1"></span>
+    <button class="sm" id="btn-prev">← 上一页</button>
+    <span class="small muted" id="page-label"></span>
+    <button class="sm" id="btn-next">下一页 →</button>
+  </div>
+</div>
+
+<div id="list"><div class="card"><div class="loading">加载中…</div></div></div>
+<button class="fab" id="fab" title="AI 答疑">🤖</button>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ static_url('js/page_wrongbook.js') }}"></script>
+{% endblock %}

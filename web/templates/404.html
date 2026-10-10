@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div class="empty">
+    <p style="font-size:40px;margin:0">🧭</p>
+    <p>{{ message or "页面不存在，可能是链接输错了。" }}</p>
+    <p><a href="{{ page_url('index') }}">← 回到首页</a></p>
+  </div>
+</div>
+{% endblock %}

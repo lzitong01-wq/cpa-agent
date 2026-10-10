@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block subtitle %}严格三级分类：科目 → 章节 → 知识点，支持按题型/难度筛选与组卷{% endblock %}
+
+{% block content %}
+<div class="grid side">
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <div class="card">
+      <h2>三级分类导航</h2>
+      <p class="sub">点击知识点即可筛选该知识点下的题目。</p>
+      <div class="tree" id="tree"><div class="loading">加载中…</div></div>
+    </div>
+    <div class="card">
+      <h2>组卷</h2>
+      <p class="sub">按当前筛选条件生成练习试卷，整卷提交后一次性判分。</p>
+      <label class="field"><span>题量</span>
+        <input type="number" id="paper-limit" value="10" min="1" max="100">
+      </label>
+      <div class="row">
+        <button class="primary" id="btn-paper">📝 生成试卷</button>
+        <button id="btn-chapter-practice">✍️ 专项刷题</button>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <div class="card">
+      <div class="row">
+        <label class="field" style="flex:1;min-width:150px;margin:0"><span>题型</span>
+          <select id="f-qtype">
+            <option value="">全部题型</option>
+            <option value="single">单选题</option>
+            <option value="multiple">多选题</option>
+            <option value="judge">判断题</option>
+            <option value="short">简答题</option>
+            <option value="comprehensive">综合题</option>
+          </select>
+        </label>
+        <label class="field" style="flex:1;min-width:150px;margin:0"><span>难度</span>
+          <select id="f-difficulty">
+            <option value="">全部难度</option>
+            <option value="1">1（易）</option>
+            <option value="2">2（中）</option>
+            <option value="3">3（较难）</option>
+            <option value="4">4（难）</option>
+            <option value="5">5（很难）</option>
+          </select>
+        </label>
+        <label class="field" style="flex:1;min-width:110px;margin:0"><span>每页</span>
+          <select id="f-limit">
+            <option value="10">10</option>
+            <option value="20" selected>20</option>
+            <option value="50">50</option>
+          </select>
+        </label>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <span id="scope-label" class="tag brand">全部科目</span>
+        <span id="count-label" class="small muted"></span>
+        <span style="flex:1"></span>
+        <button class="sm" id="btn-reset">清除筛选</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>题目列表</h2>
+      <div id="qlist"><div class="loading">加载中…</div></div>
+      <div class="row end" style="margin-top:12px">
+        <button class="sm" id="btn-prev">← 上一页</button>
+        <span class="small muted" id="page-label"></span>
+        <button class="sm" id="btn-next">下一页 →</button>
+      </div>
+    </div>
+  </div>
+</div>
+<button class="fab" id="fab" title="AI 答疑">🤖</button>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ static_url('js/page_bank.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,24 @@
+# 统一用 LF 换行，避免 Windows/Linux 协作时整文件 diff
+* text=auto eol=lf
+
+# 二进制文件不做换行转换
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.db binary
+*.db-wal binary
+*.db-shm binary
+*.pyc binary
+*.zip binary
+
+# 前端静态资源与文档也用 LF
+*.html text eol=lf
+*.css  text eol=lf
+*.js   text eol=lf
+*.json text eol=lf
+*.md   text eol=lf
+*.py   text eol=lf
+*.sql  text eol=lf

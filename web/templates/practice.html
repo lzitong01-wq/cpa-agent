@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block subtitle %}在线做题 · 提交即判分 · 展示标准解析 · 自动收错题{% endblock %}
+
+{% block content %}
+<div class="grid side">
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <div class="card">
+      <h2>本次练习</h2>
+      <div id="session-box" class="small muted">加载中…</div>
+      <div class="bar" style="margin-top:10px"><i id="progress-bar" style="width:0%"></i></div>
+      <div class="row" style="margin-top:12px">
+        <div class="stat" style="flex:1"><span class="num" id="p-done">0</span><span class="label">已答</span></div>
+        <div class="stat ok" style="flex:1"><span class="num" id="p-right">0</span><span class="label">答对</span></div>
+        <div class="stat bad" style="flex:1"><span class="num" id="p-wrong">0</span><span class="label">答错</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>换一组题</h2>
+      <label class="field"><span>科目</span>
+        <select id="subject-pick"><option value="">全部科目</option></select>
+      </label>
+      <label class="field"><span>题量</span>
+        <input type="number" id="limit-pick" value="10" min="1" max="50">
+      </label>
+      <div class="row">
+        <button class="primary" id="btn-recommend">🎯 智能推送</button>
+        <button id="btn-mock">📝 模拟</button>
+        <button id="btn-wrong">❌ 错题</button>
+      </div>
+      <p class="sub" style="margin:12px 0 0">
+        推送算法优先出错题关联知识点，其次薄弱知识点，并混入少量已掌握题巩固，不做纯随机出题。
+      </p>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <div id="paper-summary"></div>
+    <div id="stage"><div class="card"><div class="loading">加载中…</div></div></div>
+    <div id="done-box"></div>
+  </div>
+</div>
+<button class="fab" id="fab" title="AI 答疑">🤖</button>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ static_url('js/page_practice.js') }}"></script>
+{% endblock %}

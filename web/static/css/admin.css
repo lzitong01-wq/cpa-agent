@@ -1,0 +1,80 @@
+/* 登录页、管理后台等新增视图的样式（延续 app.css 的变量与命名习惯） */
+
+/* ---------------------------------------------------------------- 登录页 */
+.auth-body {
+  min-height: 100vh; margin: 0; display: flex; align-items: center;
+  justify-content: center; background: var(--bg); padding: 24px;
+}
+.auth-box {
+  width: 100%; max-width: 392px; background: var(--panel);
+  border: 1px solid var(--border); border-radius: 16px; padding: 26px 26px 20px;
+  box-shadow: 0 12px 32px rgba(28, 36, 52, .08);
+}
+.auth-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.auth-brand .logo {
+  display: grid; place-items: center; width: 42px; height: 42px; flex: none;
+  border-radius: 11px; background: var(--brand); color: #fff;
+  font-weight: 700; font-size: 14px; letter-spacing: .5px;
+}
+.auth-brand h1 { margin: 0; font-size: 17px; }
+.auth-brand p { margin: 2px 0 0; font-size: 12px; color: var(--muted); }
+
+.auth-tabs { display: flex; gap: 4px; margin-bottom: 16px; }
+.auth-tabs .tab {
+  flex: 1; padding: 8px 0; border-radius: 9px; border: 1px solid transparent;
+  background: transparent; color: var(--muted); font-size: 14px;
+}
+.auth-tabs .tab.active {
+  background: var(--brand-weak); border-color: #cfe0ff;
+  color: var(--brand); font-weight: 600;
+}
+#auth-form label {
+  display: block; margin-bottom: 13px; font-size: 12px; color: var(--muted);
+}
+#auth-form input { margin-top: 5px; }
+.auth-error {
+  margin: 0 0 12px; padding: 8px 11px; border-radius: 9px; font-size: 13px;
+  background: var(--bad-weak); border: 1px solid #f6cfcf; color: var(--bad);
+}
+button.block, .btn.block { width: 100%; padding: 10px 0; }
+.auth-foot {
+  margin: 16px 0 0; padding-top: 14px; border-top: 1px solid var(--border);
+  font-size: 12px; color: var(--muted); line-height: 1.8;
+}
+
+/* ---------------------------------------------------------------- 顶栏补充 */
+.topbar .btn-link {
+  font-size: 12px; color: var(--muted); padding: 4px 8px; border-radius: 7px;
+}
+.topbar .btn-link:hover {
+  background: var(--panel-2); color: var(--text); text-decoration: none;
+}
+.topbar .badge-user { display: inline-flex; align-items: center; gap: 6px; }
+.nav a.admin-link { color: var(--warn); }
+.nav a.admin-link.active { background: var(--warn-weak); color: var(--warn); }
+
+/* ---------------------------------------------------------------- 管理后台 */
+.card-head {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 12px;
+}
+.card-head h2 { margin: 0; }
+.card-head > :last-child { margin-left: auto; }
+.filters {
+  display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end;
+  margin-bottom: 12px;
+}
+.filters label { font-size: 12px; color: var(--muted); }
+.filters label > input, .filters label > select { margin-top: 4px; min-width: 190px; }
+.filters button { flex: none; }
+.stat .hint { color: var(--muted); font-size: 11px; margin-top: 2px; }
+.ok-line, .bad-line {
+  margin: 10px 0 0; padding: 9px 12px; border-radius: 9px; font-size: 13px;
+}
+.ok-line { background: var(--ok-weak); border: 1px solid #c7ebd8; color: var(--ok); }
+.bad-line { background: var(--bad-weak); border: 1px solid #f6cfcf; color: var(--bad); }
+.table-wrap { overflow-x: auto; }
+td .row { gap: 6px; }
+code {
+  font-family: var(--mono); font-size: 12px; background: var(--panel-2);
+  border: 1px solid var(--border); border-radius: 5px; padding: 1px 5px;
+}

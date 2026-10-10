@@ -1,0 +1,30 @@
+# 运行本项目所需的第三方依赖
+#
+# 说明：
+# 1. 业务层（题库 / 判分 / 错题本 / 推送算法 / 统计）只用 Python 标准库 sqlite3，
+#    不依赖任何 ORM，建表语句见 app/schema.sql。
+# 2. 只装 FastAPI 相关四项 + jieba 也能跑通全站（含登录/权限），
+#    RAG 会自动降级到 hashing 向量后端；
+#    要用中文语义检索请装 torch + transformers（本项目不使用 sentence-transformers）。
+# 3. 大模型调用走标准库 urllib，不需要装 openai / anthropic SDK。
+
+# --- Web 框架（必需）---
+fastapi>=0.115
+uvicorn>=0.30
+starlette>=0.38          # SessionMiddleware，登录会话用
+itsdangerous>=2.2         # 会话 cookie 签名，SessionMiddleware 依赖
+python-multipart>=0.0.9   # 管理员上传教材的 multipart/form-data 表单
+
+# --- 中文分词，BM25 检索用（必需）---
+jieba>=0.42.1
+
+# --- 数值计算，向量检索用（必需）---
+numpy>=1.26
+
+# --- 中文语义向量（强烈建议，缺失时自动降级为 hashing 向量）---
+torch>=2.2
+transformers>=4.40
+
+# --- 可选：解析 PDF / Word 教材，缺失时这两类文件会被跳过 ---
+PyMuPDF>=1.24
+python-docx>=1.1

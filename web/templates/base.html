@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ page_title }} · CPA 题库与 AI 答疑智能体</title>
+  <link rel="stylesheet" href="{{ static_url('css/app.css') }}">
+  <link rel="stylesheet" href="{{ static_url('css/components.css') }}">
+  <link rel="stylesheet" href="{{ static_url('css/admin.css') }}">
+  {% block head %}{% endblock %}
+</head>
+<body data-user-id="{{ user.id if user else '' }}"
+      data-username="{{ user.username if user else '' }}"
+      data-role="{{ user.role if user else '' }}">
+<header class="topbar">
+  <a class="brand" href="{{ page_url('index') }}">
+    <span class="logo">CPA</span>
+    <span>题库与 AI 答疑智能体</span>
+  </a>
+  <nav class="nav">
+    {% for endpoint, label, icon, admin_only in nav_items %}
+      {% if not admin_only or is_admin %}
+      <a href="{{ page_url(endpoint) }}"
+         class="{{ 'active' if current_endpoint == endpoint else '' }}{{ ' admin-link' if admin_only else '' }}">{{ icon }} {{ label }}</a>
+      {% endif %}
+    {% endfor %}
+  </nav>
+  <span class="spacer"></span>
+  {% if user %}
+    <span class="badge-user">
+      {% if is_admin %}<span class="tag admin">管理员</span>{% endif %}
+      {{ user.display_name or user.username }}
+    </span>
+    <a class="btn-link" href="/logout">退出</a>
+  {% else %}
+    <a class="btn-link" href="/login">登录</a>
+  {% endif %}
+</header>
+
+<main class="wrap">
+  <div class="page-head">
+    <h1>{{ page_title }}</h1>
+    <p>{% block subtitle %}{% endblock %}</p>
+  </div>
+  {% block content %}{% endblock %}
+</main>
+
+<script src="{{ static_url('js/common.js') }}"></script>
+<script src="{{ static_url('js/question.js') }}"></script>
+<script src="{{ static_url('js/chat.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

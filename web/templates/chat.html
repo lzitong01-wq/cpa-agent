@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block subtitle %}三类意图：刷题 / 知识点答疑（RAG 教材溯源）/ 针对某道题提问{% endblock %}
+
+{% block content %}
+<div class="grid side">
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <div class="card">
+      <h2>它能做什么</h2>
+      <p class="sub" style="margin-bottom:10px">直接用自然语言说就行，不需要点菜单。</p>
+      <div class="small" style="line-height:2">
+        <div><span class="tag brand">刷题</span> 给我推送会计收入章节的题</div>
+        <div><span class="tag brand">刷题</span> 来 5 道税法的多选</div>
+        <div><span class="tag brand">刷题</span> 我要刷错题 / 模拟考一套</div>
+        <div><span class="tag ok">答疑</span> 帮我解释什么是暂时性差异</div>
+        <div><span class="tag ok">答疑</span> 重要性水平怎么确定</div>
+        <div><span class="tag warn">题目</span> 这道题我没看懂</div>
+        <div><span class="tag warn">题目</span> 题目12 为什么选 C</div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>答疑的边界</h2>
+      <p class="sub" style="margin:0">
+        知识点答疑一律先检索 CPA 教材知识库，基于检索到的原文作答，并在末尾标注
+        「科目 · 章节 · 知识点」来源。教材里检索不到时会明确回复
+        「CPA教材中没有对应相关描述，请核对提问」，不会编造。
+      </p>
+      <div class="row" style="margin-top:12px">
+        <button class="sm" id="btn-clear">清空本会话</button>
+      </div>
+    </div>
+    <div class="card">
+      <h2>做题区</h2>
+      <p class="sub" style="margin:0">在左侧对话里点任意一道题，就会出现在这里作答。</p>
+      <div id="inline-stage" style="margin-top:12px"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="chat-shell" id="chat-root">
+      <div class="chat-status"></div>
+      <div class="chat-log"></div>
+      <div class="chat-input">
+        <div class="hints"></div>
+        <div class="chat-picked"></div>
+        <div class="box">
+          <textarea placeholder="想刷题就说「给我推送会计收入章节的题」，想问知识点就直接问（Enter 发送，Shift+Enter 换行）"></textarea>
+          <button class="primary chat-send">发送</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ static_url('js/page_chat.js') }}"></script>
+{% endblock %}

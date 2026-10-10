@@ -1,0 +1,32 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+
+# --- 运行时数据 ---
+# 数据库由 `python run.py --setup` 自动生成，且含账号密码哈希与答题记录，不入库
+*.db
+*.db-wal
+*.db-shm
+*.sqlite3
+
+# 用户上传的教材（属个人资料，不走版本控制）
+data/corpus/uploads/*
+
+# --- 环境变量 / 密钥 ---
+.env
+.env.*
+!.env.example
+
+# --- 编辑器与系统 ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# --- 日志 ---
+*.log

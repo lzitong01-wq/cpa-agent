@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block subtitle %}学习概览 · 智能推送 · 一句话开始刷题{% endblock %}
+
+{% block content %}
+<div class="grid c4" id="stat-cards">
+  <div class="card stat brand"><span class="num" id="s-total">-</span><span class="label">累计答题</span></div>
+  <div class="card stat ok"><span class="num" id="s-acc">-</span><span class="label">总正确率</span></div>
+  <div class="card stat bad"><span class="num" id="s-wrong">-</span><span class="label">错题本待攻克</span></div>
+  <div class="card stat"><span class="num" id="s-kp">-</span><span class="label">已练知识点 / 总数</span></div>
+</div>
+
+<div class="grid side" style="margin-top:16px">
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <div class="card">
+      <h2>开始刷题</h2>
+      <p class="sub">推送算法按「错题关联 40% / 薄弱 35% / 未练 15% / 巩固 10%」配额出题，不是随机抽题。</p>
+      <label class="field"><span>限定科目（可不选）</span>
+        <select id="subject-pick"><option value="">全部科目</option></select>
+      </label>
+      <label class="field"><span>题目数量</span>
+        <input type="number" id="limit-pick" value="10" min="1" max="50">
+      </label>
+      <div class="row">
+        <button class="primary" id="btn-recommend">🎯 智能推送</button>
+        <button id="btn-mock">📝 模拟刷题</button>
+        <button id="btn-wrong">❌ 错题刷题</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>我的知识点画像</h2>
+      <p class="sub">推送算法的输入：各知识点正确率决定题目从哪个桶里出。</p>
+      <div id="profile-box" class="loading">加载中…</div>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <div class="card">
+      <h2>各科目掌握情况</h2>
+      <div id="subject-table"><div class="loading">加载中…</div></div>
+    </div>
+    <div class="card">
+      <h2>最薄弱的知识点</h2>
+      <p class="sub">点击可直接对该知识点专项刷题。</p>
+      <div id="weak-box"><div class="loading">加载中…</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="card" style="margin-top:16px">
+  <h2>🤖 AI 答疑智能体</h2>
+  <p class="sub">支持三类意图：刷题 / 知识点答疑（RAG 教材溯源）/ 针对某道题提问。答疑严格基于教材原文，检索不到会明确告知。</p>
+  <div class="chat-shell" id="chat-root" style="height:520px">
+    <div class="chat-status"></div>
+    <div class="chat-log"></div>
+    <div class="chat-input">
+      <div class="hints"></div>
+      <div class="chat-picked"></div>
+      <div class="box">
+        <textarea placeholder="例如：给我推送会计收入章节的题 / 帮我解释什么是暂时性差异（Enter 发送，Shift+Enter 换行）"></textarea>
+        <button class="primary chat-send">发送</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ static_url('js/page_index.js') }}"></script>
+{% endblock %}

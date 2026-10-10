@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>登录 · CPA 题库与 AI 答疑智能体</title>
+  <link rel="stylesheet" href="{{ static_url('css/app.css') }}">
+  <link rel="stylesheet" href="{{ static_url('css/components.css') }}">
+  <link rel="stylesheet" href="{{ static_url('css/admin.css') }}">
+</head>
+<body class="auth-body">
+<div class="auth-box">
+  <div class="auth-brand">
+    <span class="logo">CPA</span>
+    <div>
+      <h1>题库与 AI 答疑智能体</h1>
+      <p>六科题库 · 智能推送 · 教材溯源答疑</p>
+    </div>
+  </div>
+
+  <div class="auth-tabs">
+    <button class="tab active" data-mode="login" type="button">登录</button>
+    {% if allow_register %}
+    <button class="tab" data-mode="register" type="button">注册</button>
+    {% endif %}
+  </div>
+
+  <form id="auth-form" autocomplete="on">
+    <label>用户名
+      <input name="username" type="text" required maxlength="32" autocomplete="username"
+             placeholder="2~32 位中英文、数字、下划线">
+    </label>
+    <label>密码
+      <input name="password" type="password" required maxlength="256"
+             autocomplete="current-password" placeholder="至少 6 位">
+    </label>
+    <label class="reg-only" hidden>昵称（可选）
+      <input name="display_name" type="text" maxlength="64" placeholder="展示用的名字">
+    </label>
+    <p class="auth-error" id="auth-error" hidden></p>
+    <button class="btn primary block" id="auth-submit" type="submit">登 录</button>
+  </form>
+
+  <p class="auth-foot">
+    每个账号的答题记录、错题本、统计与对话历史相互独立。<br>
+    教材知识库由管理员统一维护，全站共用。
+  </p>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  const form = document.getElementById("auth-form");
+  const errBox = document.getElementById("auth-error");
+  const submit = document.getElementById("auth-submit");
+  const regOnly = Array.prototype.slice.call(document.querySelectorAll(".reg-only"));
+  let mode = "login";
+
+  function nextUrl() {
+    const p = new URLSearchParams(location.search).get("next");
+    return (p && p.startsWith("/") && !p.startsWith("//")) ? p : null;
+  }
+
+  Array.prototype.slice.call(document.querySelectorAll(".auth-tabs .tab"))
+    .forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        mode = btn.dataset.mode;
+        document.querySelectorAll(".auth-tabs .tab")
+          .forEach(b => b.classList.toggle("active", b === btn));
+        regOnly.forEach(n => { n.hidden = mode !== "register"; });
+        submit.textContent = mode === "login" ? "登 录" : "注册并进入";
+        form.password.autocomplete = mode === "login" ? "current-password" : "new-password";
+        errBox.hidden = true;
+      });
+    });
+
+  form.addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    errBox.hidden = true;
+    submit.disabled = true;
+    submit.textContent = "处理中…";
+    const body = {
+      username: form.username.value.trim(),
+      password: form.password.value
+    };
+    if (mode === "register") body.display_name = form.display_name.value.trim() || null;
+    try {
+      const res = await fetch("/api/auth/" + mode, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      });
+      const data = await res.json();
+      if (!res.ok || data.ok === false) throw new Error(data.error || ("HTTP " + res.status));
+      location.href = nextUrl() || data.data.redirect || "/";
+    } catch (e) {
+      errBox.textContent = e.message;
+      errBox.hidden = false;
+      submit.disabled = false;
+      submit.textContent = mode === "login" ? "登 录" : "注册并进入";
+    }
+  });
+})();
+</script>
+</body>
+</html>

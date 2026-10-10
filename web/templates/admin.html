@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block subtitle %}上传教材到共享知识库、管理知识库与账号{% endblock %}
+
+{% block content %}
+<div class="grid c4" id="admin-stats"></div>
+
+<section class="card">
+  <h2>上传教材</h2>
+  <p class="muted">
+    支持 .md / .markdown / .txt / .pdf / .docx，单个文件最大 <span id="max-mb">-</span> MB。
+    上传后立即返回，切片与向量化在后台进行，完成后<strong>所有账号</strong>的 AI 答疑立即可以检索到。
+  </p>
+  <form id="upload-form" class="filters">
+    <label>文件
+      <input type="file" name="file" id="upload-file" required
+             accept=".md,.markdown,.txt,.pdf,.docx">
+    </label>
+    <label>科目（可选）
+      <select id="upload-subject"><option value="">自动识别</option></select>
+    </label>
+    <button class="btn primary" type="submit" id="upload-btn">上传并入库</button>
+  </form>
+  <p class="muted small">
+    Markdown 用 <code># 科目</code> / <code>## 章节</code> / <code>### 知识点</code>
+    三级标题，引用来源才能标到知识点级别；PDF/Word 会按"第X章/第X节"或 Word 标题层级识别。
+  </p>
+  <div id="upload-msg"></div>
+</section>
+
+<section class="card">
+  <div class="card-head">
+    <h2>入库任务</h2>
+    <button class="btn ghost" id="jobs-refresh" type="button">刷新</button>
+  </div>
+  <div id="jobs-table"></div>
+</section>
+
+<section class="card">
+  <div class="card-head">
+    <h2>知识库教材</h2>
+    <button class="btn ghost" id="docs-reindex" type="button">重扫语料目录</button>
+  </div>
+  <div id="docs-table"></div>
+</section>
+
+<section class="card">
+  <div class="card-head">
+    <h2>账号管理</h2>
+    <button class="btn ghost" id="user-new" type="button">+ 新建账号</button>
+  </div>
+  <div id="users-table"></div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ static_url('js/page_admin.js') }}"></script>
+{% endblock %}

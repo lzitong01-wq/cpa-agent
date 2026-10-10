@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block subtitle %}答题历史 · 分科目/章节/知识点正确率 · 每日趋势 · 薄弱点排行{% endblock %}
+
+{% block content %}
+<div class="card tight" style="margin-bottom:16px">
+  <div class="row">
+    <label class="field" style="flex:1;min-width:180px;margin:0"><span>统计范围</span>
+      <select id="f-subject"><option value="">全部科目</option></select>
+    </label>
+    <label class="field" style="flex:1;min-width:150px;margin:0"><span>趋势天数</span>
+      <select id="f-days"><option value="7">近 7 天</option><option value="14" selected>近 14 天</option><option value="30">近 30 天</option></select>
+    </label>
+    <span style="flex:2"></span>
+  </div>
+</div>
+
+<div class="grid c4">
+  <div class="card stat brand"><span class="num" id="s-total">-</span><span class="label">累计答题</span></div>
+  <div class="card stat ok"><span class="num" id="s-acc">-</span><span class="label">正确率</span></div>
+  <div class="card stat"><span class="num" id="s-avg">-</span><span class="label">平均用时（秒/题）</span></div>
+  <div class="card stat"><span class="num" id="s-days">-</span><span class="label">学习天数</span></div>
+</div>
+
+<div class="grid c2" style="margin-top:16px">
+  <div class="card">
+    <h2>每日答题趋势</h2>
+    <p class="sub">柱高为答题量，颜色深浅为当天正确率。</p>
+    <div id="trend"><div class="loading">加载中…</div></div>
+  </div>
+  <div class="card">
+    <h2>分题型正确率</h2>
+    <div id="by-qtype"><div class="loading">加载中…</div></div>
+  </div>
+</div>
+
+<div class="grid c2" style="margin-top:16px">
+  <div class="card">
+    <h2>分科目</h2>
+    <div id="by-subject"><div class="loading">加载中…</div></div>
+  </div>
+  <div class="card">
+    <h2>分章节</h2>
+    <div id="by-chapter"><div class="loading">加载中…</div></div>
+  </div>
+</div>
+
+<div class="grid c2" style="margin-top:16px">
+  <div class="card">
+    <h2>最薄弱知识点 TOP10</h2>
+    <p class="sub">推送算法会优先从这里出题。</p>
+    <div id="weak"><div class="loading">加载中…</div></div>
+  </div>
+  <div class="card">
+    <h2>刷题模式分布</h2>
+    <div id="by-mode"><div class="loading">加载中…</div></div>
+  </div>
+</div>
+
+<div class="card" style="margin-top:16px">
+  <h2>答题历史明细</h2>
+  <div class="row" style="margin-bottom:10px">
+    <label class="row small" style="gap:6px">
+      <input type="checkbox" id="only-wrong" style="width:auto"> 只看做错的
+    </label>
+    <span style="flex:1"></span>
+    <button class="sm" id="btn-prev">← 上一页</button>
+    <span class="small muted" id="page-label"></span>
+    <button class="sm" id="btn-next">下一页 →</button>
+  </div>
+  <div id="records"><div class="loading">加载中…</div></div>
+</div>
+<button class="fab" id="fab" title="AI 答疑">🤖</button>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ static_url('js/page_stats.js') }}"></script>
+{% endblock %}
