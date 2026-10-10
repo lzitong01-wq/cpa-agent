@@ -28,5 +28,8 @@ data/corpus/uploads/*
 .DS_Store
 Thumbs.db
 
+# --- 本地 AI 工作台数据（非项目源码） ---
+.workbuddy/
+
 # --- 日志 ---
 *.log
